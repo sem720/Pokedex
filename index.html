@@ -16,17 +16,20 @@
     </header>
 
     <div id="content">
+        <input class="input" id="searchInput" name="text" placeholder="Search name..." type="search" oninput="searchPokemons(this.value)">
 
-        <div class="card">
-            <div class="first-content">
-              <img src="./imgs/pikachu.gif" height="80px" alt="">
-              <span>Pikachu</span>
-            </div>
-            <div class="second-content">
-          <span>Stats</span>
+        <div class="renderPokemons" id="renderPokemons">
+            <div class="card">
+                <div class="first-content">
+                <img src="./imgs/pikachu.gif" height="80px" alt="">
+                <span>Pikachu</span>
+                </div>
+                <div class="second-content">
+            <span>Stats</span>
+                </div>
             </div>
         </div>
-
+        
         
 
         

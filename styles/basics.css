@@ -18,3 +18,20 @@ body {
     font-family: name;
     src: url();
 }
+
+h1 {
+    color: white;
+    font-size: 40px;
+}
+
+h2 {
+    color: rgb(22, 22, 22);
+    font-size: 22px;
+}
+
+p {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 22px;
+}
+

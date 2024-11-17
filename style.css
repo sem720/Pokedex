@@ -13,9 +13,25 @@ header {
 #content {
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.renderPokemons {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin: 0 200px;
+}
+
+.no-find {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.no-find p {
+    margin: 20px;
 }
 
 footer {
@@ -44,6 +60,5 @@ footer {
     height: 80px;
     position: absolute;
     bottom: 0;
-    left: 50%;
-
+    left: 60%;
 }
