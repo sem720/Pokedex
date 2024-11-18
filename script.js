@@ -66,7 +66,7 @@ async function loadPokemons(offset, limit) {
     } catch (error) {
         contentRef.innerHTML += `<p>Fehler beim Laden der Pokémon-Daten: ${error.message}</p>`;
     } finally {
-        hideLoader(); // Loader verstecken
+        hideLoader(); 
         if (loadMoreButton) {
             loadMoreButton.disabled = false;
             loadMoreButton.innerHTML = 'Load more';
@@ -79,13 +79,21 @@ async function loadPokemons(offset, limit) {
 async function loadMorePokemons() {
     const loadMoreButton = document.getElementById('loadMoreButton');
 
-   
     loadMoreButton.disabled = true;
     loadMoreButton.innerHTML = '<div class="loader"></div>';
 
-    
     offset += limit;
-    await loadPokemons(offset, limit);
+
+    
+    const searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+
+    if (searchQuery.length < 3) {
+        
+        await loadPokemons(offset, limit);
+    } else {
+        
+        await searchPokemons(searchQuery);
+    }
 }
 
 async function searchPokemons(query) {
@@ -94,6 +102,7 @@ async function searchPokemons(query) {
 
     const searchQuery = query.trim().toLowerCase();
 
+    
     if (searchQuery.length >= 3) {
         try {
             showLoader(); 
@@ -105,31 +114,37 @@ async function searchPokemons(query) {
                 pokemon.name.toLowerCase().includes(searchQuery)
             );
 
-            for (let pokemon of filteredPokemons) {
-                const pokemonDetails = await fetch(pokemon.url);
-                const detailsData = await pokemonDetails.json();
-
-                const pokemonCardData = {
-                    name: pokemon.name,
-                    image: detailsData.sprites.front_default,
-                    height: (detailsData.height / 10).toFixed(2),
-                    weight: (detailsData.weight / 10).toFixed(2),
-                    category: detailsData.species.name,
-                    abilities: detailsData.abilities.map(a => a.ability.name).join(', '),
-                };
-
-                contentRef.innerHTML += cardTemplate(pokemonCardData);
-            }
-
             if (filteredPokemons.length === 0) {
                 contentRef.innerHTML = `<div class="no-find"><p>Kein Pokémon gefunden, das mit "${searchQuery}" übereinstimmt.</p><img height="150px" width="150px" src="./imgs/not-found.png" alt="not-found"></div>`;
+            } else {
+                
+                for (let pokemon of filteredPokemons) {
+                    const pokemonDetails = await fetch(pokemon.url);
+                    const detailsData = await pokemonDetails.json();
+
+                    
+                    const pokemonType = detailsData.types[0] ? detailsData.types[0].type.name : 'normal';
+
+                    const pokemonCardData = {
+                        name: pokemon.name,
+                        image: detailsData.sprites.front_default,
+                        height: (detailsData.height / 10).toFixed(2),
+                        weight: (detailsData.weight / 10).toFixed(2),
+                        category: detailsData.species.name,
+                        abilities: detailsData.abilities.map(a => a.ability.name).join(', '),
+                        type: pokemonType 
+                    };
+
+                    contentRef.innerHTML += cardTemplate(pokemonCardData);
+                }
             }
         } catch (error) {
             contentRef.innerHTML = `<p>Fehler beim Laden der Pokémon-Daten: ${error.message}</p>`;
         } finally {
-            hideLoader(); 
+            hideLoader();
         }
     } else {
+        
         renderCards();
     }
 }
