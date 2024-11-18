@@ -11,17 +11,18 @@ async function init() {
 
 function cardTemplate(pokemon) {
     return `
-        <div class="card ${pokemon.type}">
-            <div class="first-content">
-                <img height="120px" src="${pokemon.image}" alt="${pokemon.name}">
-                <span>${pokemon.name.toUpperCase()}</span>
-            </div>
-            <div class="second-content">
-                <p><strong>Size</strong> ${pokemon.height} m</p>
-                <p><strong>Weight</strong> ${pokemon.weight} kg</p>
-                <p><strong>Category</strong> ${pokemon.category}</p>
-                <p><strong>Abilities:</strong> ${pokemon.abilities}</p>
-                <p><strong>Type:</strong> ${pokemon.type}</p>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img height="120px" src="${pokemon.image}" alt="${pokemon.name}">
+                    <span>${pokemon.name.toUpperCase()}</span>
+                </div>
+                <div class="card-back ${pokemon.type}">
+                    <p><strong>Size</strong><br> ${pokemon.height} m</p>
+                    <p><strong>Weight</strong><br> ${pokemon.weight} kg</p>
+                    <p><strong>Category</strong><br> ${pokemon.category}</p>
+                    <p><strong>Abilities:</strong><br> ${pokemon.abilities}</p>
+                </div>
             </div>
         </div>`;
 }

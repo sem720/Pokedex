@@ -31,12 +31,14 @@ h2 {
 }
 
 p {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 30px;
     font-family: Creato Regular;
+    color: #111111;
 }
 
 span {
     font-family: Creato Bold;
+    color: rgb(29, 29, 29);
 }

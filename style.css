@@ -6,6 +6,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0px 10px 20px -18px;
 }
 
 #content {
@@ -42,7 +43,7 @@ footer {
     height: 400px;
     width: 100%;
     background: #161618;
-    padding: 50px 100px;
+    padding: 50px 50px;
     padding-bottom: 0;
 }
 
@@ -64,3 +65,28 @@ footer {
     height: 100px;
     left: 60%;
 }
+
+@media (max-width: 1070px) {
+    .renderPokemons {
+        margin: 0 100px;
+    }
+}
+
+@media (max-width: 870px) {
+    .renderPokemons {
+        margin: 0 0px;
+    }
+
+    #pikachu {
+        position: absolute;
+        bottom: 0;
+        height: 100px;
+        left: 30%;
+    }
+}
+
+@media (max-width: 380px) {
+    footer {
+        padding: 50px 30px;
+      }
+  }
