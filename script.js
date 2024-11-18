@@ -1,108 +1,145 @@
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
+let offset = 0; 
+const limit = 20; 
+
 
 async function init() {
-    
-    console.log("Loading sucessfull...");
+    console.log("Loading successful...");
     await renderCards();
 }
 
+
 function cardTemplate(pokemon) {
     return `
-        <div class="card">
+        <div class="card ${pokemon.type}">
             <div class="first-content">
                 <img height="120px" src="${pokemon.image}" alt="${pokemon.name}">
                 <span>${pokemon.name.toUpperCase()}</span>
             </div>
             <div class="second-content">
-                <p><strong>Size</strong><br> ${pokemon.height} m</p>
-                <p><strong>Weight</strong><br> ${pokemon.weight} kg</p>
-                <p><strong>Category</strong><br> ${pokemon.category}</p>
-                <p><strong>Abilities:</strong><br> ${pokemon.abilities}</p>
+                <p><strong>Size</strong> ${pokemon.height} m</p>
+                <p><strong>Weight</strong> ${pokemon.weight} kg</p>
+                <p><strong>Category</strong> ${pokemon.category}</p>
+                <p><strong>Abilities:</strong> ${pokemon.abilities}</p>
+                <p><strong>Type:</strong> ${pokemon.type}</p>
             </div>
         </div>`;
 }
 
-
-
 async function renderCards() {
     let contentRef = document.getElementById('renderPokemons');
-    contentRef.innerHTML = ""; // reset div
+    contentRef.innerHTML = ""; 
+
+    showLoader(); 
+    await loadPokemons(offset, limit);
+    hideLoader(); 
+}
+
+
+async function loadPokemons(offset, limit) {
+    let contentRef = document.getElementById('renderPokemons');
+    const loadMoreButton = document.getElementById('loadMoreButton');
 
     try {
-        // API
-        const response = await fetch(`${BASE_URL}?limit=20`); // Limit: 20 Pokémon
+        showLoader(); 
+
+        const response = await fetch(`${BASE_URL}?offset=${offset}&limit=${limit}`);
         const data = await response.json();
 
-        
         for (let pokemon of data.results) {
             const pokemonDetails = await fetch(pokemon.url);
             const detailsData = await pokemonDetails.json();
 
-            
             const pokemonCardData = {
                 name: pokemon.name,
                 image: detailsData.sprites.front_default,
-                height: (detailsData.height / 10).toFixed(2), // Size
-                weight: (detailsData.weight / 10).toFixed(2), // Weight
-                category: detailsData.species.name, // Category
-                abilities: detailsData.abilities.map(a => a.ability.name).join(', '), // Abilities
+                height: (detailsData.height / 10).toFixed(2),
+                weight: (detailsData.weight / 10).toFixed(2),
+                category: detailsData.species.name,
+                abilities: detailsData.abilities.map(a => a.ability.name).join(', '),
+                type: detailsData.types[0] ? detailsData.types[0].type.name : 'normal', 
             };
 
-            
             contentRef.innerHTML += cardTemplate(pokemonCardData);
         }
     } catch (error) {
-        contentRef.innerHTML = `<p>Fehler beim Laden der Pokémon-Daten: ${error.message}</p>`;
+        contentRef.innerHTML += `<p>Fehler beim Laden der Pokémon-Daten: ${error.message}</p>`;
+    } finally {
+        hideLoader(); // Loader verstecken
+        if (loadMoreButton) {
+            loadMoreButton.disabled = false;
+            loadMoreButton.innerHTML = 'Load more';
+        }
     }
 }
 
 
 
+async function loadMorePokemons() {
+    const loadMoreButton = document.getElementById('loadMoreButton');
+
+   
+    loadMoreButton.disabled = true;
+    loadMoreButton.innerHTML = '<div class="loader"></div>';
+
+    
+    offset += limit;
+    await loadPokemons(offset, limit);
+}
+
 async function searchPokemons(query) {
     let contentRef = document.getElementById('renderPokemons');
-    contentRef.innerHTML = ""; // Inhalte zurücksetzen
+    contentRef.innerHTML = ""; 
 
-    // query trim and lowercase
     const searchQuery = query.trim().toLowerCase();
 
-    if (searchQuery.length >= 3) { // Wenn die Eingabe mindestens 3 Buchstaben hat
+    if (searchQuery.length >= 3) {
         try {
-            // limit 50
+            showLoader(); 
+
             const response = await fetch(`${BASE_URL}?limit=50`);
             const data = await response.json();
 
-            // Filter Pokemons
             const filteredPokemons = data.results.filter(pokemon =>
                 pokemon.name.toLowerCase().includes(searchQuery)
             );
 
-            
             for (let pokemon of filteredPokemons) {
                 const pokemonDetails = await fetch(pokemon.url);
                 const detailsData = await pokemonDetails.json();
 
-                
                 const pokemonCardData = {
                     name: pokemon.name,
                     image: detailsData.sprites.front_default,
-                    height: (detailsData.height / 10).toFixed(2), 
-                    weight: (detailsData.weight / 10).toFixed(2), 
-                    category: detailsData.species.name, 
-                    abilities: detailsData.abilities.map(a => a.ability.name).join(', '), 
+                    height: (detailsData.height / 10).toFixed(2),
+                    weight: (detailsData.weight / 10).toFixed(2),
+                    category: detailsData.species.name,
+                    abilities: detailsData.abilities.map(a => a.ability.name).join(', '),
                 };
 
-                
                 contentRef.innerHTML += cardTemplate(pokemonCardData);
             }
 
-            // No Findings
             if (filteredPokemons.length === 0) {
                 contentRef.innerHTML = `<div class="no-find"><p>Kein Pokémon gefunden, das mit "${searchQuery}" übereinstimmt.</p><img height="150px" width="150px" src="./imgs/not-found.png" alt="not-found"></div>`;
             }
         } catch (error) {
             contentRef.innerHTML = `<p>Fehler beim Laden der Pokémon-Daten: ${error.message}</p>`;
+        } finally {
+            hideLoader(); 
         }
     } else {
-        renderCards();  // Display all Pokemon
+        renderCards();
     }
+}
+
+
+
+function showLoader() {
+    document.getElementById('spinning-loader').style.display = 'flex';
+}
+
+
+function hideLoader() {
+    document.getElementById('spinning-loader').style.display = 'none';
 }

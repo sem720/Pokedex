@@ -8,8 +8,6 @@ header {
     justify-content: center;
 }
 
-
-
 #content {
     min-height: 100vh;
     display: flex;
@@ -34,6 +32,11 @@ header {
     margin: 20px;
 }
 
+#header-logo {
+    height: 250px;
+    animation: logo-mover 3s infinite ease-in-out;
+}
+
 footer {
     position: relative;
     height: 400px;
@@ -44,7 +47,6 @@ footer {
 }
 
 .logos {
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -57,8 +59,8 @@ footer {
 }
 
 #pikachu {
-    height: 80px;
     position: absolute;
     bottom: 0;
+    height: 100px;
     left: 60%;
 }

@@ -15,23 +15,28 @@ body {
 }
 
 @font-face {
-    font-family: name;
-    src: url();
+    font-family: Creato Bold;
+    src: url(/fonts/CreatoDisplay-Bold.otf);
 }
 
-h1 {
-    color: white;
-    font-size: 40px;
+@font-face {
+    font-family: Creato Regular;
+    src: url(/fonts/CreatoDisplay-Regular.otf);
 }
 
 h2 {
     color: rgb(22, 22, 22);
     font-size: 22px;
+    font-family: Creato Bold;
 }
 
 p {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
-    line-height: 22px;
+    line-height: 30px;
+    font-family: Creato Regular;
 }
 
+span {
+    font-family: Creato Bold;
+}
