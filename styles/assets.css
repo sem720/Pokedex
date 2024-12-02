@@ -1,10 +1,9 @@
 /* Pokemon Card */
 
-
 .card {
   width: 250px;
   height: 300px;
-  perspective: 1000px; 
+  perspective: 1000px;
   margin: 50px;
 }
 
@@ -12,21 +11,20 @@
   width: 100%;
   height: 100%;
   position: relative;
-  transform-style: preserve-3d; 
-  transition: transform 0.599s; 
+  transform-style: preserve-3d;
+  transition: transform 0.599s;
 }
 
 .card:hover .card-inner {
-  transform: rotateY(180deg); 
+  transform: rotateY(180deg);
 }
-
 
 .card-front {
   position: absolute;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden; 
-  background-color: #e2e2e2; 
+  backface-visibility: hidden;
+  background-color: #e2e2e2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,14 +32,14 @@
   font-size: 24px;
   border: 10px solid #e2e2e2;
   border-radius: 10px;
-  transform: rotateY(0deg); 
+  transform: rotateY(0deg);
 }
 
 .card-back {
   position: absolute;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden; 
+  backface-visibility: hidden;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -50,99 +48,126 @@
   font-size: 18px;
   padding: 20px;
   border-radius: 10px;
-  transform: rotateY(180deg); 
+  transform: rotateY(180deg);
 }
 
 .pokemon-type {
   margin-top: 10px;
 }
 
+/* Searchhbar */
 
-  /* Searchhbar */
+.input {
+  background-color: #f5f5f5;
+  color: #242424;
+  padding: 0.15rem 0.5rem;
+  min-height: 40px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  line-height: 1.15;
+  box-shadow: 0px 10px 20px -18px;
+  margin: 30px;
+  width: 500px;
+}
 
-  .input {
-    background-color: #f5f5f5;
-    color: #242424;
-    padding: .15rem .5rem;
-    min-height: 40px;
-    border-radius: 4px;
-    outline: none;
-    border: none;
-    line-height: 1.15;
-    box-shadow: 0px 10px 20px -18px;
-    margin: 30px;
-    width: 500px;
-  }
-  
-  input:focus {
-    border-bottom: 2px solid #86c75b;
-    border-radius: 4px 4px 2px 2px;
-  }
-  
-  input:hover {
-    outline: 1px solid lightgrey;
-  }
-  
-  /* Load More Button */
+input:focus {
+  border-bottom: 2px solid #86c75b;
+  border-radius: 4px 4px 2px 2px;
+}
 
-  #loadMoreButton {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    font-size: 14px;
-    background-color: #f5f5f5;
-    color: rgb(39, 39, 39);
-    border: 0px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
-    box-shadow: 0px 10px 20px -18px;
-    margin-bottom: 50px;
-    margin-top: 100px;
+input:hover {
+  outline: 1px solid lightgrey;
+}
+
+/* Load More Button */
+
+#loadMoreButton {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  color: rgb(39, 39, 39);
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 10px 20px -18px;
+  margin-bottom: 50px;
+  margin-top: 100px;
 }
 
 #loadMoreButton:hover {
-    outline: 1px solid lightgrey;
+  outline: 1px solid lightgrey;
 }
 
 #loadMoreButton:disabled {
-    cursor: not-allowed;
-    background-color: #f0f0f0;
-    color: #aaa;
+  cursor: not-allowed;
+  background-color: #f0f0f0;
+  color: #aaa;
+}
+
+/* Skip Button */
+
+#skip_button {
+  display: block;
+  margin: 0 15px;
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  color: rgb(39, 39, 39);
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 10px 20px -18px;
+}
+
+#skip_button:hover {
+  outline: 1px solid lightgrey;
+  background-color: #e7e7e7;
+}
+
+#skip_button:disabled {
+  cursor: not-allowed;
+  background-color: #f0f0f0;
+  color: #aaa;
 }
 
 /* Loader Styles */
 .loader {
-    border: 4px solid rgba(0, 0, 0, .1);
-    border-left-color: transparent;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    animation: spin89345 1s linear infinite;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: transparent;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin89345 1s linear infinite;
 }
 
 @keyframes spin89345 {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 550px) {
   .input {
-      width: 320px;
-    }
+    width: 320px;
+  }
 }
 
 @media (max-width: 360px) {
   .input {
-      width: 220px;
-    }
+    width: 220px;
+  }
 
-    .card {
-      margin: 50px 0;
-    }
+  .card {
+    margin: 50px 0;
+  }
 }

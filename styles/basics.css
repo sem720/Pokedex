@@ -1,44 +1,63 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html,body {
-    margin: 0;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    min-height: 100vh;  
-    background: rgb(236, 236, 236);  
+  min-height: 100vh;
+  background: rgb(236, 236, 236);
 }
 
 @font-face {
-    font-family: Creato Bold;
-    src: url(/fonts/CreatoDisplay-Bold.otf);
+  font-family: Creato Bold;
+  src: url(/fonts/CreatoDisplay-Bold.otf);
 }
 
 @font-face {
-    font-family: Creato Regular;
-    src: url(/fonts/CreatoDisplay-Regular.otf);
+  font-family: Creato Regular;
+  src: url(/fonts/CreatoDisplay-Regular.otf);
 }
 
 h2 {
-    color: rgb(22, 22, 22);
-    font-size: 22px;
-    font-family: Creato Bold;
+  color: rgb(22, 22, 22);
+  font-size: 22px;
+  font-family: Creato Bold;
+}
+
+h3 {
+  color: rgb(22, 22, 22);
+  font-size: 20px;
+  font-family: Creato Bold;
+}
+
+h4 {
+  color: rgb(22, 22, 22);
+  font-size: 18px;
+  font-family: Creato Bold;
+}
+
+h5 {
+  color: rgb(22, 22, 22);
+  font-size: 16px;
+  font-family: Creato Bold;
 }
 
 p {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 30px;
-    font-family: Creato Regular;
-    color: #111111;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 30px;
+  font-family: Creato Regular;
+  color: #111111;
 }
 
 span {
-    font-family: Creato Bold;
-    color: rgb(29, 29, 29);
+  font-family: Creato Bold;
+  color: rgb(29, 29, 29);
 }

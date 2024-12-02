@@ -1,43 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokedex</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./styles/animations.css">
-    <link rel="stylesheet" href="./styles/assets.css">
-    <link rel="stylesheet" href="./styles/basics.css">
-    <link rel="shortcut icon" href="./imgs/icon.png" type="image/x-icon">
-</head>
-<body onload="init()">
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./styles/animations.css" />
+    <link rel="stylesheet" href="./styles/assets.css" />
+    <link rel="stylesheet" href="./styles/basics.css" />
+    <link rel="shortcut icon" href="./imgs/icon.png" type="image/x-icon" />
+  </head>
+  <body onload="init()">
+    <div class="overlay">
+      <div class="info-card">
+        <div class="info-header">
+          <button id="skip_button" onclick="">previus</button>
+          <h3>POKEMON TITLE</h3>
+          <button id="skip_button" onclick="">next</button>
+        </div>
+        <div class="info-picture">
+          <img src="./imgs/not-found.png" height="120px" />
+        </div>
+        <div class="info-stats">
+          <div class="stat">
+            <h4>Stat 1</h4>
+            <h5>Stat 1 Information</h5>
+          </div>
+          <div class="stat">
+            <h4>Stat 2</h4>
+            <h5>Stat 2 Information</h5>
+          </div>
+          <div class="stat">
+            <h4>Stat 3</h4>
+            <h5>Stat 3 Information</h5>
+          </div>
+          <div class="stat">
+            <h4>Stat 4</h4>
+            <h5>Stat 4 Information</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <header>
-        <img id="header-logo" src="./imgs/header-logo.png">
+      <img id="header-logo" src="./imgs/header-logo.png" />
     </header>
 
     <div id="content">
-        <div id="spinning-loader" style="display: none;">
-            <div class="loader"></div>
-        </div>        
-        <input class="input" id="searchInput" name="text" placeholder="Search name..." type="search" oninput="searchPokemons(this.value)">
+      <div id="spinning-loader" style="display: none">
+        <div class="loader"></div>
+      </div>
+      <input
+        class="input"
+        id="searchInput"
+        name="text"
+        placeholder="Search name..."
+        type="search"
+        oninput="searchPokemons(this.value)"
+      />
 
-        <div class="renderPokemons" id="renderPokemons">
-        </div>
-        
-        <div class="renderPokemons" id="renderPokemons"></div>
-            <div>
-                <button id="loadMoreButton" onclick="loadMorePokemons()">Load more</button>
-            </div>
+      <div class="renderPokemons" id="renderPokemons"></div>
+
+      <div class="renderPokemons" id="renderPokemons"></div>
+      <div>
+        <button id="loadMoreButton" onclick="loadMorePokemons()">
+          Load more
+        </button>
+      </div>
     </div>
 
     <footer>
-        <img id="pikachu" src="./imgs/pikachu.gif" alt="pikachu">
-        <div class="logos">
-            <img id="logo" src="./imgs/dev-logo.png" alt="Developer Akademie">
-        </div>
+      <img id="pikachu" src="./imgs/pikachu.gif" alt="pikachu" />
+      <div class="logos">
+        <img id="logo" src="./imgs/dev-logo.png" alt="Developer Akademie" />
+      </div>
     </footer>
-</body>
-<script src="./script.js"></script>
-<script src="./js/animations.js"></script>
-<script src="./js/template.js"></script>
+  </body>
+  <script src="./script.js"></script>
+  <script src="./js/animations.js"></script>
+  <script src="./js/template.js"></script>
 </html>
