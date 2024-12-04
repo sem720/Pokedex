@@ -11,45 +11,42 @@
     <link rel="shortcut icon" href="./imgs/icon.png" type="image/x-icon" />
   </head>
   <body onload="init()">
-    <div class="overlay">
-      <div class="info-card">
+    <div id="overlay" onclick="toggleOverlay(event)" class="overlay d_none">
+      <div class="info-card" onclick="event.stopPropagation();">
         <div class="info-header">
-          <button id="skip_button" onclick="">previus</button>
-          <h3>POKEMON TITLE</h3>
-          <button id="skip_button" onclick="">next</button>
+          <button id="next_button" onclick="showPreviousPokemon()">
+            previous
+          </button>
+          <h3 id="pokemon-title">POKEMON TITLE</h3>
+          <button id="next_button" onclick="showNextPokemon()">next</button>
         </div>
         <div class="info-picture">
-          <img src="./imgs/not-found.png" height="120px" />
+          <img id="pokemon-image" src="./imgs/not-found.png" height="120px" />
         </div>
         <div class="info-stats">
           <div class="stat">
-            <h4>Stat 1</h4>
-            <h5>Stat 1 Information</h5>
+            <h5 id="pokemon-hp"></h5>
           </div>
           <div class="stat">
-            <h4>Stat 2</h4>
-            <h5>Stat 2 Information</h5>
+            <h5 id="pokemon-attack"></h5>
           </div>
           <div class="stat">
-            <h4>Stat 3</h4>
-            <h5>Stat 3 Information</h5>
+            <h5 id="pokemon-defense"></h5>
           </div>
           <div class="stat">
-            <h4>Stat 4</h4>
-            <h5>Stat 4 Information</h5>
+            <h5 id="pokemon-speed"></h5>
           </div>
         </div>
       </div>
     </div>
-
+    <div id="spinning-loader" style="display: none">
+      <div class="loader"></div>
+    </div>
     <header>
       <img id="header-logo" src="./imgs/header-logo.png" />
     </header>
 
     <div id="content">
-      <div id="spinning-loader" style="display: none">
-        <div class="loader"></div>
-      </div>
       <input
         class="input"
         id="searchInput"

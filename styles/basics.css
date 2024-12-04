@@ -61,3 +61,7 @@ span {
   font-family: Creato Bold;
   color: rgb(29, 29, 29);
 }
+
+.d_none {
+  display: none;
+}

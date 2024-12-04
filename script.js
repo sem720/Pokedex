@@ -1,32 +1,11 @@
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
 let offset = 0;
 const limit = 20;
+let pokemons = [];
 
 async function init() {
   console.log("Loading successful...");
   await renderCards();
-}
-
-function cardTemplate(pokemon) {
-  return `
-            <div class="card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img height="120px" src="${pokemon.image}" alt="${
-    pokemon.name
-  }">
-                        <span>${pokemon.name.toUpperCase()}</span>
-                    </div>
-                    <div class="card-back ${pokemon.type}">
-                        <p><strong>Size</strong><br> ${pokemon.height} m</p>
-                        <p><strong>Weight</strong><br> ${pokemon.weight} kg</p>
-                        <p><strong>Category</strong><br> ${pokemon.category}</p>
-                        <p><strong>Abilities:</strong><br> ${
-                          pokemon.abilities
-                        }</p>
-                    </div>
-                </div>
-            </div>`;
 }
 
 async function renderCards() {
@@ -38,6 +17,26 @@ async function renderCards() {
   } finally {
     hideLoader();
   }
+}
+
+function toggleOverlay(event, index = null) {
+  const overlay = document.getElementById("overlay");
+  const body = document.body;
+
+  overlay.classList.toggle("d_none");
+
+  if (!overlay.classList.contains("d_none")) {
+    body.style.overflow = "hidden";
+  } else {
+    body.style.overflow = "";
+  }
+
+  if (index !== null) {
+    currentPokemonIndex = index;
+    displayPokemonDetails(index);
+  }
+
+  event.stopPropagation();
 }
 
 async function loadPokemons(offset, limit) {
@@ -63,9 +62,18 @@ async function addPokemonCard(pokemon) {
     category: details.species.name,
     abilities: details.abilities.map((a) => a.ability.name).join(", "),
     type: details.types[0]?.type.name || "normal",
+    stats: {
+      hp: details.stats[0]?.base_stat || 0,
+      attack: details.stats[1]?.base_stat || 0,
+      defense: details.stats[2]?.base_stat || 0,
+      speed: details.stats[5]?.base_stat || 0,
+    },
   };
-  document.getElementById("renderPokemons").innerHTML +=
-    cardTemplate(pokemonCardData);
+  pokemons.push(pokemonCardData);
+  document.getElementById("renderPokemons").innerHTML += cardTemplate(
+    pokemonCardData,
+    pokemons.length - 1
+  );
 }
 
 async function loadMorePokemons() {
@@ -145,4 +153,35 @@ function hideLoader() {
 async function fetchJSON(url) {
   const response = await fetch(url);
   return response.json();
+}
+
+function displayPokemonDetails(index) {
+  const pokemon = pokemons[index];
+  if (!pokemon) return;
+
+  document.getElementById("pokemon-title").textContent =
+    pokemon.name.toUpperCase();
+  document.getElementById("pokemon-image").src =
+    pokemon.image || "./imgs/not-found.png";
+  document.getElementById("pokemon-hp").textContent = `HP: ${pokemon.stats.hp}`;
+  document.getElementById(
+    "pokemon-attack"
+  ).textContent = `Attack: ${pokemon.stats.attack}`;
+  document.getElementById(
+    "pokemon-defense"
+  ).textContent = `Defense: ${pokemon.stats.defense}`;
+  document.getElementById(
+    "pokemon-speed"
+  ).textContent = `Speed: ${pokemon.stats.speed}`;
+}
+
+function showNextPokemon() {
+  currentPokemonIndex = (currentPokemonIndex + 1) % pokemons.length;
+  displayPokemonDetails(currentPokemonIndex);
+}
+
+function showPreviousPokemon() {
+  currentPokemonIndex =
+    (currentPokemonIndex - 1 + pokemons.length) % pokemons.length;
+  displayPokemonDetails(currentPokemonIndex);
 }

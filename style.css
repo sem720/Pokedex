@@ -8,7 +8,6 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  display: none;
 }
 
 .info-card {
@@ -52,8 +51,35 @@
 .stat {
   background: rgb(243, 243, 243);
   margin: 10px 0;
-  padding: 5px;
+  padding: 15px;
   border-radius: 5px;
+}
+
+@media (max-width: 790px) {
+  #pokemon-title {
+    font-size: 18px;
+  }
+
+  .info-card {
+    height: 70%;
+    width: 80%;
+  }
+}
+
+@media (max-width: 430px) {
+  #pokemon-title {
+    font-size: 14px;
+  }
+
+  .info-card {
+    height: 70%;
+    width: 95%;
+  }
+
+  #next_button {
+    padding: 5px 5px;
+    margin: 0 5px;
+  }
 }
 
 header {
