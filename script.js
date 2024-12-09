@@ -2,15 +2,17 @@ const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
 let offset = 0;
 const limit = 20;
 let pokemons = [];
+let debounceTimeout = null;
 
 async function init() {
-  console.log("Loading successful...");
   await renderCards();
 }
 
 async function renderCards() {
   const contentRef = document.getElementById("renderPokemons");
   contentRef.innerHTML = "";
+  pokemons = [];
+  offset = 0;
   showLoader();
   try {
     await loadPokemons(offset, limit);
@@ -51,9 +53,12 @@ async function loadPokemons(offset, limit) {
     hideLoader();
   }
 }
-
 async function addPokemonCard(pokemon) {
   const details = await fetchJSON(pokemon.url);
+
+  // Prüfen, ob Pokémon bereits in der Liste ist
+  if (pokemons.some((p) => p.name === pokemon.name)) return;
+
   const pokemonCardData = {
     name: pokemon.name,
     image: details.sprites.front_default,
@@ -69,6 +74,7 @@ async function addPokemonCard(pokemon) {
       speed: details.stats[5]?.base_stat || 0,
     },
   };
+
   pokemons.push(pokemonCardData);
   document.getElementById("renderPokemons").innerHTML += cardTemplate(
     pokemonCardData,
@@ -97,23 +103,34 @@ async function loadMorePokemons() {
   }
 }
 
-async function searchPokemons(query) {
-  const contentRef = document.getElementById("renderPokemons");
-  if (query.length < 3) return renderCards();
-  try {
-    showLoader();
-    const data = await fetchJSON(`${BASE_URL}?limit=50`);
-    const matches = data.results.filter((p) =>
-      p.name.toLowerCase().includes(query)
-    );
-    matches.length
-      ? await renderMatchedPokemons(matches)
-      : displayNoResults(query);
-  } catch (error) {
-    displayError(error);
-  } finally {
-    hideLoader();
+function searchPokemons(query) {
+  if (debounceTimeout) clearTimeout(debounceTimeout);
+
+  if (query.length < 3) {
+    return;
   }
+
+  debounceTimeout = setTimeout(async () => {
+    const contentRef = document.getElementById("renderPokemons");
+    pokemons = [];
+
+    try {
+      showLoader();
+      const data = await fetchJSON(`${BASE_URL}?limit=200`);
+      const matches = data.results.filter((p) =>
+        p.name.toLowerCase().includes(query)
+      );
+      if (matches.length) {
+        await renderMatchedPokemons(matches);
+      } else {
+        displayNoResults(query);
+      }
+    } catch (error) {
+      displayError(error);
+    } finally {
+      hideLoader();
+    }
+  }, 300);
 }
 
 async function renderMatchedPokemons(matches) {
@@ -185,3 +202,26 @@ function showPreviousPokemon() {
     (currentPokemonIndex - 1 + pokemons.length) % pokemons.length;
   displayPokemonDetails(currentPokemonIndex);
 }
+
+function resetToStartPage() {
+  offset = 0;
+  renderCards();
+}
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", (event) => {
+  if (event.target.value === "") {
+    resetToStartPage();
+  }
+});
+
+searchInput.addEventListener("searchInput", (event) => {
+  const query = event.target.value.trim().toLowerCase();
+
+  if (query === "") {
+    resetToStartPage();
+  } else if (query.length >= 3) {
+    searchPokemons(query);
+  }
+});
